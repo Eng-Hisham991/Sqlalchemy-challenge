@@ -1,5 +1,4 @@
 
-#%matplotlib inline
 
 import numpy as np
 import pandas as pd
@@ -44,7 +43,7 @@ def welcome():
         f"/api/v1.0/stations<br/>"
         f"/api/v1.0/tobs<br/>"
         f"/api/v1.0/temp/start_date<br/>"
-        f"/api/v1.0/start_date/end_date"
+        f"/api/v1.0/<str:start_date>/<str:end_date>"
     )
 
 @app.route("/api/v1.0/precipitation")
@@ -105,13 +104,14 @@ def stats(start_date):
     info= ['Min Temp', 'Max Temp', 'Avg Temp']
     return jsonify(info, result)
 
-@app.route("/api/v1.0/temp/start_date/end_date") 
-def calc(start_date, end_date):
+@app.route("/api/v1.0/temp/<startdate>/<enddate>") 
+def calc(startdate, enddate):
     
     session= Session(engine)
     aa= session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-        filter(and_(Measurement.date >= start_date),(Measurement.date <= end_date)).all()
+        filter(and_(Measurement.date >= startdate),(Measurement.date <= enddate)).all()
     session.close()
+    
     return jsonify(aa)
     
 
