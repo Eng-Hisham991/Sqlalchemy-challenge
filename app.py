@@ -37,14 +37,15 @@ app = Flask(__name__)
 def welcome():
     """List all available api routes."""
     return (
-        f"Welcome to Honolulu, Hawaii API!<br/>"
-        f"Available Routes:<br/>"
-        f"/api/v1.0/precipitation<br/>"
-        f"/api/v1.0/stations<br/>"
-        f"/api/v1.0/tobs<br/>"
-        f"/api/v1.0/temp/start_date<br/>"
-        f"/api/v1.0/<str:start_date>/<str:end_date>"
+        f"<h3>Available Routes:</h3>"
+        f'<a href="/api/v1.0/precipitation">/api/v1.0/precipitation</a><br/>'
+        f'<a href="/api/v1.0/stations">/api/v1.0/stations</a><br/>'       
+        f'<a href="/api/v1.0/tobs">/api/v1.0/tobs</a><br/>'
+        f'<a href="/api/v1.0/start_date">/api/v1.0/start_date</a><br/>' 
+        f'<a href="/api/v1.0/start_date, end_date>">/api/v1.0/start_date, end_date></a><br/>' 
+        f'<a href="/"><h4>Back</h4></a><br/>' 
     )
+    
 
 @app.route("/api/v1.0/precipitation")
 def precipitation():
@@ -104,7 +105,7 @@ def stats(start_date):
     info= ['Min Temp', 'Max Temp', 'Avg Temp']
     return jsonify(info, result)
 
-@app.route("/api/v1.0/temp/<startdate>/<enddate>") 
+@app.route("/api/v1.0/temp/startdate,enddate") 
 def calc(startdate, enddate):
     
     session= Session(engine)
